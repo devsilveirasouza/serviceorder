@@ -30,7 +30,7 @@
                             <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Fornecedores</a>
+                            <a class="nav-link" href="{{ route('clients.index') }}">Clientes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="">Produtos</a>
