@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+
 @endsection
 
 @section('content')
@@ -19,13 +20,34 @@
                         <h3 class="mb-4">Lista de Clientes
                             <a href="{{ route('clients.create') }}" class="btn btn-primary float-end">Novo</a>
                         </h3>
+                        <!-- Inicio do Toast ==================================================================================== -->
+                        <!-- Toast HTML -->
+                        <div class="position-fixed top-0 end-0 mt-5 p-3" style="z-index: 11">
+                            <!-- Toast de sucesso -->
+                            @if(session('success'))
+                            <div id="toast-success" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body">
+                                        {{ session('success') }}
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            @endif
 
-                        @if(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
+                            <!-- Toast de erro -->
+                            @if(session('error'))
+                            <div id="toast-error" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body">
+                                        {{ session('error') }}
+                                    </div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                            </div>
+                            @endif
                         </div>
-                        @endif
-
+                        <!-- Fim do Toast ======================================================================================= -->
                         <table id="clients-table" class="table table-striped table-bordered">
                             <thead class="table-dark">
                                 <tr>
@@ -63,6 +85,7 @@
             </div>
         </div>
     </div>
+
 </div>
 @endsection
 
@@ -70,6 +93,23 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- Script para exibir o Toast -->
+<script>
+        // Verificar e exibir toast de sucesso
+        @if(session('success'))
+            var toastSuccessEl = document.getElementById('toast-success');
+            var toastSuccess = new bootstrap.Toast(toastSuccessEl);
+            toastSuccess.show();
+        @endif
+
+        // Verificar e exibir toast de erro
+        @if(session('error'))
+            var toastErrorEl = document.getElementById('toast-error');
+            var toastError = new bootstrap.Toast(toastErrorEl);
+            toastError.show();
+        @endif
+    </script>
 
 <script type="text/javascript">
     $(document).ready(function() {

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -30,23 +32,17 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Client $client)
+    public function store(StoreClientRequest $request)
     {
-        $validator = Validator::make($client->all(), [
-            'name' => 'required|string|min:3|max:100',
-            'email' => 'required|string|email|min:10|max:100|unique:clients',
-            'phone' => 'required|string|min:8/max:20',
-            'address' => 'required|string|max:150',
-        ]);
+        try {
+            Client::create($request->all());
 
-        $client = Client::create([
-            'name' => request('name'),
-            'email' => request('email'),
-            'phone' => request('phone'),
-            'address' => request('address'),
-        ]);
-
-        return redirect()->route('clients.index');
+            return redirect()->route('clients.index')
+                ->with('success', 'Registro criado com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('clients.index')
+                ->with('error', 'Erro ao criar o registro: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -68,11 +64,16 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Client $client)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        $client->fill(request()->all());
-        $client->save();
-        return redirect()->route('clients.index')->with('success', 'Registro atualizado com Sucesso!');
+        try {
+            $client->update($request->all());
+            return redirect()->route('clients.index')
+                ->with('success', 'Registro atualizado com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('clients.index')
+                ->with('error', 'Não foi possível atualizar o registro: ' . $e->getMessage());
+        }
     }
 
     /**

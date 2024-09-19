@@ -37,15 +37,20 @@ class UserController extends Controller
             'role'          => 'required',
         ]);
 
-        $user               = new User();
-        $user->name         = $request->name;
-        $user->email        = $request->email;
-        $user['password']   = bcrypt($request->password);
-        $user->role         = $request->role;
-        $user->save();
+        try {
+            $user               = new User();
+            $user->name         = $request->name;
+            $user->email        = $request->email;
+            $user['password']   = bcrypt($request->password);
+            $user->role         = $request->role;
+            $user->save();
 
-
-        return redirect()->route('users.index');
+            return redirect()->route('users.index')
+                ->with('success', 'Registro criado com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('users.index')
+                ->with('error', 'Erro ao criar o registro: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -53,8 +58,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user_details = User::find($user);
-        return view('admin.users.show', ['user' => $user_details]);
+        return view('admin.users.show', ['user' => $user]);
     }
 
     /**

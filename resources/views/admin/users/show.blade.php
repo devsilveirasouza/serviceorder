@@ -7,11 +7,16 @@
 <div class="col-md-12">
     <div class="h-100 p-5 bg-light border rounded-3">
         <h2>{{ $user->name }}</h2>
-        <label for="">Email: </label>
         <hr>
+        <label for="">Email: </label>
         <p>{{ $user->email }}</p>
+        <hr>
         <label for="">Data de Cadastro: </label>
+        @if ($user->created_at)
         <p>{{ date_format($user->created_at, 'd/m/Y') }}</p>
+        @else
+        <p>Não disponível</p>
+        @endif
         <hr>
         <label for="">Tipo de Usuário: </label>
         <p>{{ $user->role }}</p>
