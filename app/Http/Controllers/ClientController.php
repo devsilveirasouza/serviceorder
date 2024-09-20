@@ -81,7 +81,13 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->delete();
-        return redirect()->route('clients.index')->with('success', 'Registro excluído com Sucesso!');
+        try {
+            $client->delete();
+            return redirect()->route('clients.index')
+                ->with('success', 'Registro excluído com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('clients.index')
+                ->with('error', 'Não foi possível excluir o registro: ' . $e->getMessage());
+        }
     }
 }

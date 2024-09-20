@@ -14,35 +14,40 @@
 </head>
 
 <body>
-    <div class="d-flex flex-column p-1">
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top text-white">
-            <div class="container-fluid">
+    <!-- Main Content -->
+    <div class="card">
+        <div class="d-flex flex-column p-1">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top text-white">
+                <div class="container-fluid">
 
-                <span class="fs-4">ServiceCar System</span>
+                    <span class="fs-4">Ordem de Serviço</span>
 
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('clients.index') }}">Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Produtos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Categorias</a>
-                        </li>
-                    </ul>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('clients.index') }}">Clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('vehicles.index') }}">Veiculos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">Produtos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">Categorias</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-        <!-- Main Content -->
+            </nav>
+        </div>
         <div class="flex-grow-2 mt-3 mb-3 p-3">
             <!-- Aqui será injetado o conteúdo específico de cada página -->
             @yield('content')

@@ -9,80 +9,79 @@
 @endsection
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="p-1">
-            <div class="card col-md-12">
-                <div class="card-header mt-4 text-center bg-dark text-white">Gestão de Usuários</div>
-                <div class="card-body">
-                    <div class="container mt-5">
-                        <h3 class="mb-4">Lista de Usuários
-                            <a href="{{ route('users.create') }}" class="btn btn-primary float-end">Novo</a>
-                        </h3>
-                        <!-- Inicio do Toast ==================================================================================== -->
-                        <!-- Toast HTML -->
-                        <div class="position-fixed top-0 end-0 mt-5 p-3" style="z-index: 11">
-                            <!-- Toast de sucesso -->
-                            @if(session('success'))
-                            <div id="toast-success" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="d-flex">
-                                    <div class="toast-body">
-                                        {{ session('success') }}
-                                    </div>
-                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            <div class="card-body">
+                <div class="container mt-5">
+                    <h3 class="mb-4">Lista de Usuários
+                        <a href="{{ route('users.create') }}" class="btn btn-primary float-end">Novo</a>
+                    </h3>
+                    <!-- Inicio do Toast ==================================================================================== -->
+                    <!-- Toast HTML -->
+                    <div class="position-fixed top-0 end-0 mt-5 p-3" style="z-index: 11">
+                        <!-- Toast de sucesso -->
+                        @if(session('success'))
+                        <div id="toast-success" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ session('success') }}
                                 </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                             </div>
-                            @endif
-
-                            <!-- Toast de erro -->
-                            @if(session('error'))
-                            <div id="toast-error" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                                <div class="d-flex">
-                                    <div class="toast-body">
-                                        {{ session('error') }}
-                                    </div>
-                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                                </div>
-                            </div>
-                            @endif
                         </div>
-                        <!-- Fim do Toast ======================================================================================= -->
-                        <table id="users-table" class="table table-striped table-bordered">
-                            <thead class="table-dark">
-                                <tr>
-                                    <!-- <th>ID</th> -->
-                                    <th>Usuário</th>
-                                    <th>Email</th>
-                                    <th>Tipo de Usuário</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($users as $user)
-                                <tr>
-                                    <!-- <td>{{ $user->id }}</td> -->
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role }}</td>
-                                    <td>
-                                        <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i></a>
-                                        <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Você têm certeza que quer apagar este registro?')"><i class="fa-solid fa-trash"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        @endif
+
+                        <!-- Toast de erro -->
+                        @if(session('error'))
+                        <div id="toast-error" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ session('error') }}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        @endif
                     </div>
+                    <!-- Fim do Toast ======================================================================================= -->
+                    <table id="users-table" class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <!-- <th>ID</th> -->
+                                <th>Usuário</th>
+                                <th>Email</th>
+                                <th>Tipo de Usuário</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                            <tr>
+                                <!-- <td>{{ $user->id }}</td> -->
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->role }}</td>
+                                <td>
+                                    <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Você têm certeza que quer apagar este registro?')"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('page-js')

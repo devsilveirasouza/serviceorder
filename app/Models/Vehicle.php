@@ -10,7 +10,7 @@ class Vehicle extends Model
     use HasFactory;
 
     protected $fillable = [
-        'cliente_id',
+        'client_id',
         'brand',
         'model',
         'plate',
@@ -20,7 +20,7 @@ class Vehicle extends Model
      * Relação com a tabela de clientes (Client)
      * Um veículo pertence a um Cliente 
      */
-    public function cliente(){
+    public function client(){
         return $this->belongsTo(Client::class);
     }
 

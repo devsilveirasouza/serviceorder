@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -28,15 +31,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request, User $user)
     {
-        $request->validate([
-            'name'          => 'required|min:3|max:100',
-            'email'         => 'required|email|unique:users',
-            'password'      => 'required|min:8|max:20',
-            'role'          => 'required',
-        ]);
-
         try {
             $user               = new User();
             $user->name         = $request->name;
@@ -72,23 +68,30 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user->fill(request()->all());
-        $user->save();
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully');
+        try {
+            $user->update(request()->all());
+            return redirect()->route('users.index')
+                ->with('success', 'Registro atualizado com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('users.index')
+                ->with('error', 'Não foi possível atualizar o registro: ' . $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $user)
+    public function destroy(User $user)
     {
-        $user = User::find($user);
-
-        $user->delete();
-
-        return redirect()->route('users.index');
+        try {
+            $user->delete();
+            return redirect()->route('users.index')
+                ->with('success', 'Registro excluído com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('users.index')
+                ->with('error', 'Não foi possível excluir o registro: ' . $e->getMessage());
+        }
     }
 }

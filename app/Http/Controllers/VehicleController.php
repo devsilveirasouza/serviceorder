@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        //
+        $vehicles = Vehicle::with('client')->get();
+        return view('admin.vehicles.index', ['vehicles' => $vehicles]);
     }
 
     /**
@@ -20,7 +22,8 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+        $clients = Client::all();
+        return view('admin.vehicles.create', ['clients' => $clients]);
     }
 
     /**
@@ -28,7 +31,29 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'client_id'     => 'required|exists:clients,id',
+            'brand'         => 'required',
+            'model'         => 'required',
+            'plate'         => 'required',
+        ]);
+
+        try {
+            $vehicle = new Vehicle([
+                'client_id'     => $request->client_id,
+                'brand'         => $request->brand,
+                'model'         => $request->model,
+                'plate'         => $request->plate,
+            ]);
+
+            $vehicle->save();
+
+            return redirect()->route('vehicles.index')
+                ->with('success', 'Registro criado com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('vehicles.index')
+                ->with('error', 'Erro ao criar o registro: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -36,7 +61,7 @@ class VehicleController extends Controller
      */
     public function show(Vehicle $vehicle)
     {
-        //
+        return view('admin.vehicles.show', ['vehicle' => $vehicle]);
     }
 
     /**
@@ -44,7 +69,9 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
-        //
+        $vehicle = Vehicle::with('client')->find($vehicle->id);
+        $clients = Client::all();
+        return view('admin.vehicles.edit', ['vehicle' => $vehicle, 'clients' => $clients]);
     }
 
     /**
@@ -52,7 +79,24 @@ class VehicleController extends Controller
      */
     public function update(Request $request, Vehicle $vehicle)
     {
-        //
+        $request->validate([
+            'client_id'     => 'required|exists:clients,id',
+            'brand'         => 'required',
+            'model'         => 'required',
+            'plate'         => 'required|unique:vehicles,plate,' . $vehicle->id,
+        ]);
+
+        try {
+
+            $vehicle = Vehicle::findOrFail($vehicle->id);
+            $vehicle->update($request->all());
+
+            return redirect()->route('vehicles.index')
+                ->with('success', 'Registro atualizado com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('vehicles.index')
+                ->with('error', 'Não foi possível atualizar o registro: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -60,6 +104,15 @@ class VehicleController extends Controller
      */
     public function destroy(Vehicle $vehicle)
     {
-        //
+        try {
+            $vehicle = Vehicle::findOrFail($vehicle->id);
+            $vehicle->delete();
+
+            return redirect()->route('vehicles.index')
+                ->with('success', 'Registro excluído com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('vehicles.index')
+                ->with('error', 'Não foi possível excluir o registro: ' . $e->getMessage());
+        }
     }
 }

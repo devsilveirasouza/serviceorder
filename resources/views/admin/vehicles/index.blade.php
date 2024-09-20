@@ -1,22 +1,22 @@
 @extends('layouts.principal')
 
-@section('title', 'Clients')
+@section('title', 'Vehicles')
 
 @section('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-
 @endsection
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="p-1">
             <div class="card-body">
                 <div class="container mt-5">
-                    <h3 class="mb-4">Lista de Clientes
-                        <a href="{{ route('clients.create') }}" class="btn btn-primary float-end">Novo</a>
+                    <h3 class="mb-4">Lista de Veículos
+                        <a href="{{ route('vehicles.create') }}" class="btn btn-primary float-end">Novo</a>
                     </h3>
                     <!-- Inicio do Toast ==================================================================================== -->
                     <!-- Toast HTML -->
@@ -46,29 +46,29 @@
                         @endif
                     </div>
                     <!-- Fim do Toast ======================================================================================= -->
-                    <table id="clients-table" class="table table-striped table-bordered">
+                    <table id="users-table" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
                                 <!-- <th>ID</th> -->
-                                <th>Client</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                                <th class="text-center col-md-2">Ações</th>
+                                <th>Cliente</th>
+                                <th>Modelo</th>
+                                <th>Marca</th>
+                                <th>Placa</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($clients as $client)
+                            @foreach($vehicles as $vehicle)
                             <tr>
-                                <!-- <td>{{ $client->id }}</td> -->
-                                <td>{{ $client->name }}</td>
-                                <td>{{ $client->email }}</td>
-                                <td>{{ $client->phone }}</td>
-                                <td>{{ $client->address }}</td>
+                                <!-- <td>{{ $vehicle->id }}</td> -->
+                                <td>{{ $vehicle->client->name }}</td>
+                                <td>{{ $vehicle->model }}</td>
+                                <td>{{ $vehicle->brand }}</td>
+                                <td>{{ $vehicle->plate }}</td>
                                 <td>
-                                    <a href="{{ route('clients.show', $client) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="{{ route('clients.edit', $client) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <form action="{{ route('clients.destroy', $client) }}" method="POST" style="display:inline-block;">
+                                    <a href="{{ route('vehicles.show', $vehicle) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ route('vehicles.edit', $vehicle) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <form action="{{ route('vehicles.destroy', $vehicle) }}" method="POST" style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Você têm certeza que quer apagar este registro?')"><i class="fa-solid fa-trash"></i></button>
@@ -110,7 +110,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#clients-table').DataTable({
+        $('#users-table').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
