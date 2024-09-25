@@ -38,10 +38,10 @@
                                 <a class="nav-link" href="{{ route('vehicles.index') }}">Veiculos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">Produtos</a>
+                                <a class="nav-link" href="{{ route('parts.index') }}">Peças</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">Categorias</a>
+                                <a class="nav-link" href="{{ route('orders.index') }}">Ordem Serviço</a>
                             </li>
                         </ul>
                     </div>

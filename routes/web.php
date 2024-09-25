@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PartController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
+use App\Models\Order;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +39,24 @@ Route::get('/vehicles/show/{vehicle}', [VehicleController::class, 'show'])->name
 Route::get('/vehicles/edit/{vehicle}', [VehicleController::class, 'edit'])->name('vehicles.edit');
 Route::put('/vehicles/update/{vehicle}', [VehicleController::class, 'update'])->name('vehicles.update');
 Route::delete('/vehicles/delete/{vehicle}', [VehicleController::class, 'destroy'])->name('vehicles.destroy');
+
+// Parts
+Route::get('/parts',                   [PartController::class, 'index'])->name('parts.index');
+Route::get('/parts/create',    [PartController::class, 'create'])->name('parts.create');
+Route::post('/parts/store', [PartController::class, 'store'])->name('parts.store');
+Route::get('/parts/show/{part}', [PartController::class, 'show'])->name('parts.show');
+Route::get('/parts/edit/{part}', [PartController::class, 'edit'])->name('parts.edit');
+Route::put('/parts/update/{part}', [PartController::class, 'update'])->name('parts.update');
+Route::delete('/parts/delete/{part}', [PartController::class, 'destroy'])->name('parts.destroy');
+
+// Orders
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/orders/show/{order}', [OrderController::class, 'show'])->name('orders.show');
+Route::get('/orders/edit/{order}', [OrderController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/update/{order}', [OrderController::class, 'update'])->name('orders.update');
+Route::delete('/orders/delete/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

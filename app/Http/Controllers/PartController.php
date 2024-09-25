@@ -12,7 +12,9 @@ class PartController extends Controller
      */
     public function index()
     {
-        //
+        $parts = Part::all();
+
+        return view('admin.parts.index', ['parts' => $parts]);
     }
 
     /**
@@ -20,7 +22,7 @@ class PartController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.parts.create');
     }
 
     /**
@@ -28,7 +30,19 @@ class PartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required',
+                'price' => 'required',
+                'quantity_in_stock' => 'required',
+            ]);
+
+            Part::create($request->all());
+
+            return redirect()->route('parts.index')->with('success', 'Registro criado com Sucesso.');
+        } catch (\Exception $e) {
+            return redirect()->route('parts.index')->with('error', 'Erro ao criar o registro: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -36,7 +50,7 @@ class PartController extends Controller
      */
     public function show(Part $part)
     {
-        //
+        return view('admin.parts.show', ['part' => $part]);
     }
 
     /**
@@ -44,7 +58,7 @@ class PartController extends Controller
      */
     public function edit(Part $part)
     {
-        //
+        return view('admin.parts.edit', ['part' => $part]);
     }
 
     /**
@@ -52,7 +66,19 @@ class PartController extends Controller
      */
     public function update(Request $request, Part $part)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required',
+                'price' => 'required',
+                'quantity_in_stock' => 'required',
+            ]);
+
+            $part->update($request->all());
+
+            return redirect()->route('parts.index')->with('success', 'Registro atualizado com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('parts.index')->with('error', 'Não foi possível atualizar o registro: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -60,6 +86,12 @@ class PartController extends Controller
      */
     public function destroy(Part $part)
     {
-        //
+        try {
+            $part->delete();
+
+            return redirect()->route('parts.index')->with('success', 'Registro excluído com Sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('parts.index')->with('error', 'Não foi possível excluir o registro: ' . $e->getMessage());
+        }
     }
 }

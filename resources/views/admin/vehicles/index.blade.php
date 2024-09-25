@@ -46,15 +46,16 @@
                         @endif
                     </div>
                     <!-- Fim do Toast ======================================================================================= -->
-                    <table id="users-table" class="table table-striped table-bordered">
+                    <table id="index-table" class="table table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
                                 <!-- <th>ID</th> -->
-                                <th>Cliente</th>
-                                <th>Modelo</th>
-                                <th>Marca</th>
-                                <th>Placa</th>
-                                <th>Ações</th>
+                                <th class="text-center">Cliente</th>
+                                <th class="text-center">Modelo</th>
+                                <th class="text-center">Marca</th>
+                                <th class="text-center">Placa</th>
+                                <th class="text-center">Data de Cadastro</th>
+                                <th class="text-center col-md-2">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,7 +66,14 @@
                                 <td>{{ $vehicle->model }}</td>
                                 <td>{{ $vehicle->brand }}</td>
                                 <td>{{ $vehicle->plate }}</td>
-                                <td>
+                                <td class="text-center">
+                                    @if($vehicle->created_at)
+                                        {{ $vehicle->created_at->format('d/m/Y') }}
+                                    @else
+                                        - - - - -
+                                    @endif
+                                </td>
+                                <td class="text-center">
                                     <a href="{{ route('vehicles.show', $vehicle) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i></a>
                                     <a href="{{ route('vehicles.edit', $vehicle) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <form action="{{ route('vehicles.destroy', $vehicle) }}" method="POST" style="display:inline-block;">
@@ -110,7 +118,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#users-table').DataTable({
+        $('#index-table').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,

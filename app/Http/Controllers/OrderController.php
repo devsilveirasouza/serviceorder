@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Order;
+use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -12,7 +15,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders         = Order::with('client', 'vehicle', 'user')->get();
+        return view('admin.orders.index', ['orders' => $orders]);
     }
 
     /**
@@ -20,7 +24,11 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $clients        = Client::all();
+        $vehicles       = Vehicle::all();
+        $users          = User::all();   
+
+        return view('admin.orders.create', ['clients' => $clients, 'vehicles' => $vehicles, 'users' => $users]);
     }
 
     /**
@@ -28,7 +36,21 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'client_id'     => 'required|exists:clients,id',
+            'vehicle_id'    => 'required|exists:vehicles,id',
+            'status'        => 'required',
+        ]);
+
+        Order::create([
+            'client_id'     => $request->client_id,
+            'vehicle_id'    => $request->vehicle_id,
+            'user_id'       => $request->user_id,
+            'status'        => $request->status,
+        ]);
+
+        return redirect()->route('orders.index')
+            ->with('success', 'Registro criado com Sucesso!');
     }
 
     /**
@@ -36,7 +58,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return view('admin.orders.show', ['order' => $order]);
     }
 
     /**
@@ -44,7 +66,10 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        $clients        = Client::all();
+        $vehicles       = Vehicle::all();
+        $users          = User::all();  
+        return view('admin.orders.edit', ['order' => $order, 'clients' => $clients, 'vehicles' => $vehicles, 'users' => $users]);
     }
 
     /**
@@ -52,7 +77,21 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $request->validate([
+            'client_id'     => 'required|exists:clients,id',
+            'vehicle_id'    => 'required|exists:vehicles,id',
+            'status'        => 'required',
+        ]); 
+
+        $order->update([
+            'client_id'     => $request->client_id,
+            'vehicle_id'    => $request->vehicle_id,
+            'user_id'       => $request->user_id,
+            'status'        => $request->status,
+        ]);
+
+        return redirect()->route('orders.index')
+            ->with('success', 'Registro atualizado com Sucesso!');
     }
 
     /**
@@ -60,6 +99,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect()->route('orders.index')
+            ->with('success', 'Registro excluído com Sucesso!');
     }
 }
