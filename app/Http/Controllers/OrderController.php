@@ -19,16 +19,37 @@ class OrderController extends Controller
         return view('admin.orders.index', ['orders' => $orders]);
     }
 
+    public function getVehicles($client_id)
+    {
+        // Obtenha os veículos do cliente selecionado
+        $vehicles = Vehicle::where('client_id', $client_id)->get();
+
+        // Retorne os veículos como uma resposta JSON
+        return response()->json($vehicles);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $clients        = Client::all();
-        $vehicles       = Vehicle::all();
-        $users          = User::all();   
+        $vehicles       = Vehicle::with('client')->get();
+        $users          = User::all();
 
-        return view('admin.orders.create', ['clients' => $clients, 'vehicles' => $vehicles, 'users' => $users]);
+        $selectedClient = $request->input('client_id');
+
+        $vehicles = $selectedClient ? Vehicle::where('client_id', $selectedClient)->get() : [];
+
+        return view(
+            'admin.orders.create',
+            [
+                'clients' => $clients,
+                'vehicles' => $vehicles,
+                'users' => $users,
+                'selectedClient' => $selectedClient
+            ]
+        );
     }
 
     /**
@@ -36,21 +57,29 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // Validar os dados do formulário
         $request->validate([
             'client_id'     => 'required|exists:clients,id',
             'vehicle_id'    => 'required|exists:vehicles,id',
             'status'        => 'required',
         ]);
 
-        Order::create([
-            'client_id'     => $request->client_id,
-            'vehicle_id'    => $request->vehicle_id,
-            'user_id'       => $request->user_id,
-            'status'        => $request->status,
-        ]);
+        $order = new Order();
+        $order->client_id     = $request->client_id;
+        $order->vehicle_id    = $request->vehicle_id;
+        $order->user_id       = $request->user_id;
+        $order->status        = $request->status;
+        $order->save();
 
-        return redirect()->route('orders.index')
-            ->with('success', 'Registro criado com Sucesso!');
+        // Redirecionar para a view de adicionar itens à ordem de serviço
+        return redirect()->route(
+            'orderItems.create',
+            [
+                'order_id' => $order->id,
+                'client_id' => $request->client_id,
+                'vehicle_id' => $request->vehicle_id
+            ]
+        );
     }
 
     /**
@@ -58,6 +87,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $order->load('client', 'vehicle', 'user', 'orderItems');
         return view('admin.orders.show', ['order' => $order]);
     }
 
@@ -68,7 +98,7 @@ class OrderController extends Controller
     {
         $clients        = Client::all();
         $vehicles       = Vehicle::all();
-        $users          = User::all();  
+        $users          = User::all();
         return view('admin.orders.edit', ['order' => $order, 'clients' => $clients, 'vehicles' => $vehicles, 'users' => $users]);
     }
 
@@ -81,7 +111,7 @@ class OrderController extends Controller
             'client_id'     => 'required|exists:clients,id',
             'vehicle_id'    => 'required|exists:vehicles,id',
             'status'        => 'required',
-        ]); 
+        ]);
 
         $order->update([
             'client_id'     => $request->client_id,

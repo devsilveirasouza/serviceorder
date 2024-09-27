@@ -19,24 +19,19 @@
         <select class="form-control col-md-12" name="client_id" id="client_id" required>
             <option value="" disabled selected>Selecione um cliente</option>
             @foreach($clients as $client)
-            <option value="{{ $client->id }}" {{  isset($order) && $order->client_id == $client->id ? 'selected' : '' }}>
-                {{ $client->name }}
-            </option>
+            <option value="{{ $client->id }}">{{ $client->name }}</option>
             @endforeach
         </select>
     </div>
 </div>
+
 <!-- Vehicle ID -->
 <div class="row">
     <div class="form-group col-md-12">
         <label for="vehicle_id">Veículo</label>
         <select class="form-control col-md-12" name="vehicle_id" id="vehicle_id" required>
             <option value="" disabled selected>Selecione um Veículo</option>
-            @foreach($vehicles as $vehicle)
-            <option value="{{ $vehicle->id }}" {{  isset($order) && $order->vehicle_id == $vehicle->id ? 'selected' : '' }}>
-                {{ $vehicle->model }} - {{ $vehicle->plate }}
-            </option>
-            @endforeach
+            <!-- Os veículos serão carregados aqui dinamicamente via AJAX -->
         </select>
     </div>
 </div>
@@ -60,4 +55,29 @@
     </div>
 </div>
 
-</div>
+<!-- Adicionar o script AJAX -->
+<script>
+    document.getElementById('client_id').addEventListener('change', function() {
+        var clientId = this.value;
+
+        // Limpar o select de veículos
+        var vehicleSelect = document.getElementById('vehicle_id');
+        vehicleSelect.innerHTML = '<option value="" disabled selected>Selecione um Veículo</option>';
+
+        // Fazer uma requisição AJAX para buscar os veículos do cliente selecionado
+        if (clientId) {
+            fetch('/get-vehicles/' + clientId)
+                .then(response => response.json())
+                .then(data => {
+                    // Adicionar os veículos no select de veículos
+                    data.forEach(vehicle => {
+                        var option = document.createElement('option');
+                        option.value = vehicle.id;
+                        option.text = vehicle.model + ' - ' + vehicle.plate;
+                        vehicleSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Erro ao buscar veículos:', error));
+        }
+    });
+</script>

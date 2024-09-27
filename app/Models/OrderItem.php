@@ -14,7 +14,8 @@ class OrderItem extends Model
         'part_id',
         'service_id',
         'quantity',
-        'price',
+        'unit_price',
+        'total_price',
     ];
 
     /**

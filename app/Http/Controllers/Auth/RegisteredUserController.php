@@ -15,6 +15,7 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
+    
     /**
      * Display the registration view.
      */
@@ -22,7 +23,6 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register');
     }
-
     /**
      * Handle an incoming registration request.
      *

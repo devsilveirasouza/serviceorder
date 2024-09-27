@@ -61,7 +61,7 @@
                             <tr>
                                 <!-- <td>{{ $part->id }}</td> -->
                                 <td>{{ $part->name }}</td>
-                                <td>{{ $part->price }}</td>
+                                <td>R$ {{ $part->price }}</td>
                                 <td>{{ $part->quantity_in_stock }}</td>                                
                                 <td>
                                     <a href="{{ route('parts.show', $part) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i></a>

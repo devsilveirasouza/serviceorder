@@ -41,6 +41,9 @@
                                 <a class="nav-link" href="{{ route('parts.index') }}">Peças</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('services.index') }}">Serviços</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('orders.index') }}">Ordem Serviço</a>
                             </li>
                         </ul>
