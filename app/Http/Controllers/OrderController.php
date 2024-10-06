@@ -92,7 +92,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        $order->load('client', 'vehicle', 'user', 'orderItems');
+        $order->with('client', 'vehicle');
         return view('admin.orders.show', ['order' => $order]);
     }
 }

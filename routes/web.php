@@ -78,13 +78,14 @@ Route::get('/get-vehicles/{client_id}', [OrderController::class, 'getVehicles'])
 Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/orders/show/{order}', [OrderController::class, 'show'])->name('orders.show');
-Route::get('/orders/edit/{order}', [OrderController::class, 'edit'])->name('orders.edit');
 Route::put('/orders/update/{order}', [OrderController::class, 'update'])->name('orders.update');
 Route::delete('/orders/delete/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 
 // Orders Items
 Route::get('/order-items/create/{order_id}/{client_id}/{vehicle_id}', [OrderItemController::class, 'create'])->name('orderItems.create');
 Route::post('/order-items/store', [OrderItemController::class, 'addItemsOrder'])->name('orderItems.store');
-Route::get('/order-items/show/{order_item}', [OrderItemController::class, 'show'])->name('ordersItems.show');
+Route::get('/order-items/edit/{order}', [OrderItemController::class, 'editItemsOrder'])->name('ordersItems.edit');
+Route::put('/order-items/update/{order}', [OrderItemController::class, 'updateItemsOrder'])->name('ordersItems.update');
+Route::get('/order-items/show/{order}', [OrderItemController::class, 'itemsDetials'])->name('ordersItems.details');
 
 // require __DIR__.'/auth.php';

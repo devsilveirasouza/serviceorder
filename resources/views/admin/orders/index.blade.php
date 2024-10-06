@@ -73,12 +73,13 @@
                                 </td>                                
                                 <td class="text-center">
                                     <a href="{{ route('orders.show', $order) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="{{ route('orders.edit', $order) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <form action="{{ route('orders.destroy', $order) }}" method="POST" style="display:inline-block;">
+                                    <a href="{{ route('ordersItems.edit', $order) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="{{ route('ordersItems.details', $order) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-list"></i></i"></a>
+                                    <!-- <form action="{{ route('orders.destroy', $order) }}" method="POST" style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Você têm certeza que quer apagar este registro?')"><i class="fa-solid fa-trash"></i></button>
-                                    </form>
+                                    </form> -->
                                 </td>
                             </tr>
                             @endforeach

@@ -1,6 +1,6 @@
 @extends('layouts.principal')
 
-@section('title', '<i class="ri-user-5-line"></i> Orders')
+@section('title', 'Orders')
 
 @section('content')
 
