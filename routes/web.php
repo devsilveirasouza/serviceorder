@@ -84,6 +84,7 @@ Route::delete('/orders/delete/{order}', [OrderController::class, 'destroy'])->na
 
 // Orders Items
 Route::get('/order-items/create/{order_id}/{client_id}/{vehicle_id}', [OrderItemController::class, 'create'])->name('orderItems.create');
-Route::post('/order-items/store', [OrderItemController::class, 'store'])->name('orderItems.store');
+Route::post('/order-items/store', [OrderItemController::class, 'addItemsOrder'])->name('orderItems.store');
+Route::get('/order-items/show/{order_item}', [OrderItemController::class, 'show'])->name('ordersItems.show');
 
 // require __DIR__.'/auth.php';

@@ -2,11 +2,12 @@
 
 @section('content')
 <div class="container mt-5">
-    <h2>Adicionar Itens à Ordem de Serviço #{{ $order->id }}</h2>
+
+
+    <h2>Adicionar Itens à Ordem de Serviço # {{isset($order) ? $order->id : "Valor Não Encontrado!" }}</h2>
 
     <form action="{{ route('orderItems.store') }}" method="POST">
         @csrf
-
         <!-- Ordem de Serviço (hidden) -->
         <input type="hidden" name="order_id" value="{{ $order->id }}">
 
@@ -26,7 +27,7 @@
 
         <!-- Serviços -->
         <div class="form-group">
-            <label for="service_id">Serviços</label>
+            <label for="services">Serviços</label>
             <table class="table" id="service_table">
                 <!-- Tabela dos serviços -->
             </table>
@@ -36,7 +37,7 @@
 
         <!-- Peças -->
         <div class="form-group">
-            <label for="part_id">Peças</label>
+            <label for="parts">Peças</label>
             <table class="table" id="part_table">
                 <!-- Tabela das peças -->
             </table>
@@ -63,15 +64,18 @@
             $('#service_table').append(`
             <tr>
                 <td>
-                    <select name="service_id[]" class="form-control">
+                    <select name="services[]" class="form-control">
                         @foreach($services as $service)
-                            <option value="{{ $service->id }}">{{ $service->name }} - {{ $service->price }}</option>
+                            <option value="{{ $service->id }}">{{ $service->name }} - {{ $service->price }}</option>                       
                         @endforeach
                     </select>
                 </td>
+                td
+                
                 <td>
                     <input type="number" name="service_qty[]" class="form-control" value="1" min="1">
                 </td>
+                
                 <td>
                     <button type="button" class="btn btn-danger remove_row">Remover</button>
                 </td>
@@ -80,11 +84,11 @@
         });
 
         // Adicionar nova peça na tabela
-        $('#add_part_row').click(function() {            
+        $('#add_part_row').click(function() {
             $('#part_table').append(`
             <tr>
                 <td>
-                    <select name="part_id[]" class="form-control">
+                    <select name="parts[]" class="form-control">
                         @foreach($parts as $part)
                             <option value="{{ $part->id }}">{{ $part->name }} - {{ $part->price }}</option>
                         @endforeach

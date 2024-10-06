@@ -16,10 +16,10 @@ class Part extends Model
     ];
 
     /**
-     * Relação com a tabela de itens de ordens de serviço (OrderItem)
+     * Relação com a tabela de peças de ordens de serviço (OrderParts)
      * Uma peça pode estar associada a vários itens de ordens de serviço
      */
-    public function orderItems(){
-        return $this->hasMany(OrderItem::class);
+    public function orders(){
+        return $this->hasMany(OrderPart::class);
     }
 }

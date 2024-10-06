@@ -18,7 +18,7 @@ class Service extends Model
      * Relação com a tabela de itens de ordens de serviço (OrderItem)
      * Um serviço pode estar associado a vários itens de ordens de serviço
      */
-    public function orderItems(){
-        return $this->hasMany(OrderItem::class);
+    public function orders(){
+        return $this->hasMany(OrderService::class);
     }
 }

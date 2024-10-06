@@ -11,6 +11,7 @@ class Order extends Model
 
     protected $fillable = [
         'client_id',
+        'total_price',
         'vehicle_id',
         'user_id',
         'status',
@@ -41,10 +42,19 @@ class Order extends Model
     }
 
     /**
-     * Relação com a tabela de itens de ordens de serviço (OrderItem)
-     * Uma ordem de serviço pode estar associada a vários itens (peças e serviços)     
+     * Relacionamento com os serviços da ordem
      */
-    public function orderItems(){
-        return $this->hasMany(OrderItem::class);
+    public function services()
+    {
+        return $this->hasMany(OrderService::class);
     }
+
+    /**
+     * Relacionamento com as peças da ordem
+     */
+    public function parts()
+    {
+        return $this->hasMany(OrderPart::class);
+    }
+    
 }
