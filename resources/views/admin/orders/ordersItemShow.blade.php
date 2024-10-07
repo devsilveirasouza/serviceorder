@@ -51,8 +51,8 @@
             <tr>
                 <td>{{ $part->part->name }}</td>
                 <td class="text-center">{{ $part->quantity }}</td>
-                <td class="text-right">R$ {{ number_format($part->unit_price, 2, ',', '.') }}</td>
-                <td class="text-right">R$ {{ number_format($part->total_price, 2, ',', '.') }}</td>
+                <td class="text-center">R$ {{ number_format($part->unit_price, 2, ',', '.') }}</td>
+                <td class="text-center">R$ {{ number_format($part->total_price, 2, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -76,17 +76,17 @@
             @foreach($order->services as $service)
             <tr>
                 <td>{{ $service->service->name }}</td>
-                <td class="text-center">{{ $service->quantity }}</td>
-                <td class="text-right">{{ number_format($service->unit_price, 2, ',', '.') }}</td>
-                <td class="text-right">{{ number_format($service->total_price, 2, ',', '.') }}</td>
+                <td class="">{{ $service->quantity }}</td>
+                <td class="text-center">{{ number_format($service->unit_price, 2, ',', '.') }}</td>
+                <td class="text-center">{{ number_format($service->total_price, 2, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>
     </table>
-    <div class="row">
-        <div class="col-md-6">
-            <h5 class="align-self-right mt-4">Valor Total</h5>
-            <p>R$ {{ number_format($order->total_price, 2, ',', '.') }}</p>
+    <div class="row justify-content-end">
+        <div class="col-md-2 mr-2">
+            <h5 class="text-center mt-4">Valor Total</h5>
+            <p class="text-center">R$ {{ number_format($order->total_price, 2, ',', '.') }}</p>
         </div>
     </div>
 </div>

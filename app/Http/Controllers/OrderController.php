@@ -28,7 +28,6 @@ class OrderController extends Controller
     {
         // Obtenha os veículos do cliente selecionado
         $vehicles = Vehicle::where('client_id', $client_id)->get();
-
         // Retorne os veículos como uma resposta JSON
         return response()->json($vehicles);
     }

@@ -32,7 +32,6 @@
                             </div>
                         </div>
                         @endif
-
                         <!-- Toast de erro -->
                         @if(session('error'))
                         <div id="toast-error" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
@@ -165,5 +164,4 @@
         });
     });
 </script>
-
 @endsection

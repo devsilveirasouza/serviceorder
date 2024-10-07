@@ -11,6 +11,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Página específica CSS -->
     @yield('page-css')
+    <style>
+        .sidebar {
+            background-color: #343a40;
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            color: #ffffff;
+            font-weight: bold;
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+
+        .content {
+            margin-left: 250px;
+            /* largura da sidebar */
+            padding: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -18,38 +48,90 @@
     <!-- Main Content -->
     <div class="card">
         <div class="d-flex flex-column p-1">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top text-white">
-                <div class="container-fluid">
 
-                    <span class="fs-4">Ordem de Serviço</span>
-
-                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('clients.index') }}">Clientes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('vehicles.index') }}">Veiculos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('parts.index') }}">Peças</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('services.index') }}">Serviços</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('orders.index') }}">Ordem Serviço</a>
-                            </li>
-                        </ul>
-                    </div>
+            <!-- Sidebar -->
+            <!-- <nav class="col-md-3 col-lg-2 sidebar">
+                <a href="{{ route('home') }}">
+                    <i class="fas fa-house"></i> Home
+                </a>
+                <a href="{{ route('users.index') }}">
+                    <i class="fas fa-users"></i> Usuários
+                </a>
+                <a href="{{ route('clients.index') }}">
+                    <i class="fas fa-user-friends"></i> Clientes
+                </a>
+                <a href="{{ route('vehicles.index') }}">
+                    <i class="fas fa-car"></i> Veículos
+                </a>
+                <a href="{{ route('parts.index') }}">
+                    <i class="fas fa-cogs"></i> Peças
+                </a>
+                <a href="{{ route('services.index') }}">
+                    <i class="fas fa-wrench"></i> Serviços
+                </a>
+                <a href="{{ route('orders.index') }}">
+                    <i class="fas fa-tasks"></i> Ordens de Serviço
+                </a>
+                <a href="#">
+                    <i class="fas fa-chart-bar"></i> Relatórios
+                </a>
+                <div class="d-flex">
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-white me-2">Sair</button>
+                    </form>
                 </div>
-            </nav>
+            </nav> -->
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Outros itens do menu -->
+                <ul class="nav flex-column">
+                    <!-- Outros links de navegação -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('users.index') }}">
+                            <i class="fas fa-users"></i> Usuários
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('clients.index') }}">
+                            <i class="fas fa-user-friends"></i> Clientes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('services.index') }}">
+                            <i class="fas fa-wrench"></i> Serviços
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('parts.index') }}">
+                            <i class="fas fa-cogs"></i> Peças
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('orders.index') }}">
+                            <i class="fas fa-list"></i> Ordens de Serviço
+                        </a>
+                    </li>
+                    <!-- Logout Option -->
+                    <li class="nav-item mt-3">
+                        <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Formulário oculto de logout -->
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+
+
         </div>
         <div class="flex-grow-2 mt-3 mb-3 p-3">
             <!-- Aqui será injetado o conteúdo específico de cada página -->

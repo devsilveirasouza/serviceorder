@@ -32,7 +32,6 @@
                             </div>
                         </div>
                         @endif
-
                         <!-- Toast de erro -->
                         @if(session('error'))
                         <div id="toast-error" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
@@ -50,10 +49,10 @@
                         <thead class="table-dark">
                             <tr>
                                 <!-- <th>ID</th> -->
-                                <th>Usuário</th>
-                                <th>Email</th>
-                                <th>Tipo de Usuário</th>
-                                <th>Ações</th>
+                                <th class="text-center">Usuário</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Tipo de Usuário</th>
+                                <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,8 +61,8 @@
                                 <!-- <td>{{ $user->id }}</td> -->
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->role }}</td>
-                                <td>
+                                <td class="text-center">{{ $user->role }}</td>
+                                <td class="text-center">
                                     <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-eye"></i></a>
                                     <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline-block;">
