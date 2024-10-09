@@ -49,39 +49,7 @@
     <div class="card">
         <div class="d-flex flex-column p-1">
 
-            <!-- Sidebar -->
-            <!-- <nav class="col-md-3 col-lg-2 sidebar">
-                <a href="{{ route('home') }}">
-                    <i class="fas fa-house"></i> Home
-                </a>
-                <a href="{{ route('users.index') }}">
-                    <i class="fas fa-users"></i> Usuários
-                </a>
-                <a href="{{ route('clients.index') }}">
-                    <i class="fas fa-user-friends"></i> Clientes
-                </a>
-                <a href="{{ route('vehicles.index') }}">
-                    <i class="fas fa-car"></i> Veículos
-                </a>
-                <a href="{{ route('parts.index') }}">
-                    <i class="fas fa-cogs"></i> Peças
-                </a>
-                <a href="{{ route('services.index') }}">
-                    <i class="fas fa-wrench"></i> Serviços
-                </a>
-                <a href="{{ route('orders.index') }}">
-                    <i class="fas fa-tasks"></i> Ordens de Serviço
-                </a>
-                <a href="#">
-                    <i class="fas fa-chart-bar"></i> Relatórios
-                </a>
-                <div class="d-flex">
-                    <form action="{{ route('logout') }}" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-link text-white me-2">Sair</button>
-                    </form>
-                </div>
-            </nav> -->
+            @if(Auth::user()){
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Outros itens do menu -->
@@ -133,6 +101,9 @@
 
 
         </div>
+        } @endif
+
+
         <div class="flex-grow-2 mt-3 mb-3 p-3">
             <!-- Aqui será injetado o conteúdo específico de cada página -->
             @yield('content')
