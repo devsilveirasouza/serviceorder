@@ -17,7 +17,7 @@
                 <!-- Coluna esquerda (Imagem ou algo mais) -->
                 <div class="col-md-6 d-none d-md-block bg-light text-center">
                     <div class="mt-5">
-                        <img src="https://via.placeholder.com/500" class="img-fluid" alt="Imagem de Login">
+                        <img src="{{ asset('images/bg-mechanic.jpg') }}" class="img-fluid" alt="Imagem de Login">
                         <h2 class="mt-3">Bem-vindo de volta!</h2>
                         <p>Por favor, entre com suas credenciais</p>
                     </div>

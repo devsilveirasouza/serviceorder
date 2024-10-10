@@ -114,5 +114,7 @@
         </div>
     </div>
 
+    <a href="{{ route('orders.generatePDF', $order->id) }}" class="btn btn-primary">Gerar PDF</a>
+
 </div>
 @endsection

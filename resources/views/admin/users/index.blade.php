@@ -14,7 +14,7 @@
     <div class="row justify-content-center">
         <div class="p-1">
             <div class="card-body">
-                <div class="container mt-5">
+                <div class="container mt-2">
                     <h3 class="mb-4">Lista de Usuários
                         <a href="{{ route('users.create') }}" class="btn btn-primary float-end">Novo</a>
                     </h3>

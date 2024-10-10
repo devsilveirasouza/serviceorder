@@ -10,6 +10,7 @@ use App\Models\OrderService;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Services\OrderService as OrderServiceItem;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -93,5 +94,30 @@ class OrderController extends Controller
     {
         $order->with('client', 'vehicle');
         return view('admin.orders.show', ['order' => $order]);
+    }
+
+    // Método para gerar o PDF da ordem de serviço
+    public function generatePDF(Order $order)
+    {
+        // Busca as informações da ordem, cliente, veículo, peças e sereviços
+        $client = $order->client;
+        $vehicle = $order->vehicle;
+        $parts = $order->parts;
+        $services = $order->services;
+
+        // Carrega a view com os dados da ordem e converte para PDF
+        $pdf = Pdf::loadView('admin.orders.reportpdf', [
+            'order' => $order,
+            'client' => $client,
+            'vehicle' => $vehicle,
+            'parts' => $parts,
+            'services' => $services
+        ]);
+
+        // Define o tamanho da página para A4
+        $pdf->setPaper('a4', 'portrait');
+
+        // Retorna o PDF para o usuário baixar
+        return $pdf->download('ordem_servico_' . $order->id . '.pdf');
     }
 }

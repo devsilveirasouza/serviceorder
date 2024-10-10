@@ -66,6 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/order-items/edit/{order}',                                 [OrderItemController::class, 'editItemsOrder'])->name('ordersItems.edit');
     Route::put('/order-items/update/{order}',                               [OrderItemController::class, 'updateItemsOrder'])->name('ordersItems.update');
     Route::get('/order-items/show/{order}',                                 [OrderItemController::class, 'itemsDetials'])->name('ordersItems.details');
+
+    Route::get('/orders/{order}/pdf',                                       [OrderController::class, 'generatePDF'])->name('orders.generatePDF');
 });
 
 require __DIR__ . '/auth.php';
