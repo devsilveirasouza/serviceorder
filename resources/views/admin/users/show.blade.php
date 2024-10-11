@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="col-md-12">
+<div style="margin-left: 250px;" class="col-md-10">
     <div class="h-100 p-5 bg-light border rounded-3">
         <h2>{{ $user->name }}</h2>
         <hr>
