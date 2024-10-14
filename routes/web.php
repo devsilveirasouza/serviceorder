@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PartController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
+use App\Models\AccountReceivable;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -68,6 +71,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/order-items/show/{order}',                                 [OrderItemController::class, 'itemsDetials'])->name('ordersItems.details');
 
     Route::get('/orders/{order}/pdf',                                       [OrderController::class, 'generatePDF'])->name('orders.generatePDF');
+    // Financial Routes
+    // Payment Routes
+    Route::get('/payment/methods', [PaymentController::class, 'showPaymentMethods'])->name('payment.methods');
+    Route::post('/payment/methods/create', [PaymentController::class, 'createPaymentMethod'])->name('payment.methods.create');
+    Route::get('/installments', [PaymentController::class, 'showInstallments'])->name('payment.installments');
+    Route::post('/installments/create', [PaymentController::class, 'createInstallment'])->name('payment.installments.create');
+
+    // Financial Routes (Payables and Receivables)
+    Route::get('/financials/payables', [FinancialController::class, 'showPayables'])->name('financial.payables');
+    Route::post('/financials/payables/create', [FinancialController::class, 'createPayable'])->name('financial.payables.create');
+
+    Route::get('/financials/receivables', [FinancialController::class, 'showReceivables'])->name('financial.receivables');
+    Route::post('/financials/receivables/create', [FinancialController::class, 'createReceivable'])->name('financial.receivables.create');
 });
 
 require __DIR__ . '/auth.php';

@@ -85,6 +85,37 @@
                             <i class="fas fa-list"></i> Ordens de Serviço
                         </a>
                     </li>
+                    <hr>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('payment.methods') }}">
+                            <i class="fa-solid fa-cash-register"></i> Métodos de Pagamento
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('payment.installments') }}">
+                            <i class="fa-solid fa-cash-register"></i> Parcelamentos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('financial.payables') }}">
+                            <i class="fa-solid fa-cash-register"></i> Contas á Pagar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('financial.receivables') }}">
+                            <i class="fa-solid fa-cash-register"></i> Contas á Receber
+                        </a>
+                    </li>
+
+                    <select class="form-control mt-2" name="" id="">
+                        <option value="">Financeiro</option>
+                        <option value="">1</option>
+                        <option value="">1</option>
+                        <option value="">1</option>
+                        <option value="">1</option>
+                    </select>
+                    
+                    <hr>
                     <!-- Logout Option -->
                     <li class="nav-item mt-3">
                         <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
