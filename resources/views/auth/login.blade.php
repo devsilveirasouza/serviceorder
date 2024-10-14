@@ -23,8 +23,7 @@
                     <div class="col-md-6 d-none d-md-block text-center">
                         <div class="mt-5">
                             <img src="{{ asset('images/bg-mechanic.jpg') }}" class="img-fluid" alt="Imagem de Login">
-                            <h2 class="mt-3">Bem-vindo de volta!</h2>
-                            <p>Por favor, entre com suas credenciais</p>
+
                         </div>
                     </div>
 
@@ -32,6 +31,8 @@
                     <div class="col-md-6 bg-white p-5">
 
                         <div class="card-header text-center">
+                            <h2 class="mt-3">Bem-vindo de volta!</h2>
+                            <p>Por favor, entre com suas credenciais</p>
                             <i class="fa-solid fa-user fa-2x text-primary"></i>
                             <h4>{{ __('Login') }}</h4>
                         </div>
