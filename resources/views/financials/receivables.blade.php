@@ -10,21 +10,19 @@
 
     <!-- Form to Add New Payable -->
     <h3>Adicionar Nova Conta a Receber</h3>
-    <form action="{{ route('financial.payables.create') }}" method="POST">
+    <form action="{{ route('financial.receivables.create') }}" method="POST">
         @csrf
         <div class="row">
 
             <div class="form-group">
                 <label for="description">Cliente:</label>
 
-                <select class="form-control mt-2" name="client_id" id="client_id" required>
+                <select class="form-control mt-2" name="description" id="description" required>
                     <option value="" selected>Selecione um cliente</option>
                     @foreach($clients as $client)
-                    <option value="{{ $client->id }}">{{ $client->name }}</option>
+                    <option value="{{ $client->name }}">{{ $client->name }}</option>
                     @endforeach
                 </select>
-
-                <!-- <input type="text" class="form-control mt-2" id="description" name="description" placeholder="Enter Fornecedor" required> -->
             </div>
 
         </div>

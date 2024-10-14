@@ -106,14 +106,11 @@
                             <i class="fa-solid fa-cash-register"></i> Contas á Receber
                         </a>
                     </li>
-
-                    <select class="form-control mt-2" name="" id="">
-                        <option value="">Financeiro</option>
-                        <option value="">1</option>
-                        <option value="">1</option>
-                        <option value="">1</option>
-                        <option value="">1</option>
-                    </select>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('financials.report') }}">
+                            <i class="fa-solid fa-cash-register"></i> Relatório Financeiro
+                        </a>
+                    </li>
                     
                     <hr>
                     <!-- Logout Option -->

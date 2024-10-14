@@ -84,6 +84,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/financials/receivables', [FinancialController::class, 'showReceivables'])->name('financial.receivables');
     Route::post('/financials/receivables/create', [FinancialController::class, 'createReceivable'])->name('financial.receivables.create');
+
+    // Financials Report
+    Route::get('/financials/report', [FinancialController::class, 'showReport'])->name('financials.report');
 });
 
 require __DIR__ . '/auth.php';

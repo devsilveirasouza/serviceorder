@@ -41,7 +41,27 @@ class FinancialController extends Controller
     // Create a new account receivable
     public function createReceivable(Request $request)
     {
-        $receivable = AccountReceivable::crete($request->all());
+        $receivable = AccountReceivable::create($request->all());
         return redirect()->route('financial.receivables');
+    }
+
+    // Show financial report for receivables and payables
+    public function showReport(Request $request)
+    {
+        // Retrieve date range if provided
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Query accounts payable
+        $payables = AccountPayable::when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+            return $query->whereBetween('due_date', [$startDate, $endDate]);
+        })->get();
+
+        // Query accounts receivable
+        $receivables = AccountReceivable::when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+            return $query->whereBetween('due_date', [$startDate, $endDate]);
+        })->get();
+
+        return view('financials.report', compact('payables', 'receivables'));
     }
 }

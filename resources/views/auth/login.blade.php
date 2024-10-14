@@ -22,7 +22,7 @@
                     <!-- Coluna esquerda (Imagem ou algo mais) -->
                     <div class="col-md-6 d-none d-md-block text-center">
                         <div class="mt-5">
-                            <img src="{{ asset('images/bg-mechanic.jpg') }}" class="img-fluid" alt="Imagem de Login">
+                            <img class="img-fluid" src="{{ asset('images/bg-oficina.jpg') }}" class="img-fluid" alt="Imagem de Login">
 
                         </div>
                     </div>
