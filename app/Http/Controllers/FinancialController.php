@@ -64,4 +64,37 @@ class FinancialController extends Controller
 
         return view('financials.report', compact('payables', 'receivables'));
     }
+
+    // Show financial dashboard
+    public function grafics(Request $request)
+    {
+        // Option selected on date range
+        $start_date                  = $request->input('start_date', now()->startOfMonth());
+        $end_date                    = $request->input('end_date', now()->startOfMonth());
+
+        // Consult accounts payable
+        $accountsPayable            = AccountPayable::whereBetween('due_date', [$start_date, $end_date])->sum('amount');
+        
+        // Consult accounts receivable
+        $accountsReceivable         = AccountReceivable::whereBetween('due_date', [$start_date, $end_date])->sum('amount');
+
+        // Consult accounts payable and paid
+        $paydAccounts               = AccountPayable::whereBetween('due_date', [$start_date, $end_date])->where('status', 'Paid')->sum('amount');
+
+        // Consult accounts receivable and received
+        $receivedAccounts           = AccountReceivable::whereBetween('due_date', [$start_date, $end_date])->where('status', 'received')->sum('amount');
+
+        // Return dashboard with financials data to view
+        return view(
+            'financials.dashboard',
+            [
+                'accountsPayable'       => $accountsPayable,
+                'accountsReceivable'    => $accountsReceivable,
+                'paydAccounts'          => $paydAccounts,
+                'receivedAccounts'      => $receivedAccounts,
+                'start_date'            => $start_date,
+                'end_date'              => $end_date
+            ]
+        );
+    }
 }

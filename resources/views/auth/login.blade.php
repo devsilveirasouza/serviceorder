@@ -7,6 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Awesome Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 @endsection
 
 @section('content')
@@ -16,14 +17,13 @@
 
             <div class="col-md-12">
                 <div class="card-header">
-                    <h2 class="text-center m-2">ORDER SERVICE</h2>
+                    <h2 class="text-center m-2">System Oficina</h2>
                 </div>
                 <div class="row">
                     <!-- Coluna esquerda (Imagem ou algo mais) -->
                     <div class="col-md-6 d-none d-md-block text-center">
                         <div class="mt-5">
-                            <img class="img-fluid" src="{{ asset('images/bg-oficina.jpg') }}" class="img-fluid" alt="Imagem de Login">
-
+                            <img style="width: 600px; height: 600px;" class="img-fluid" src="{{ asset('images/bg-oficina.jpg') }}" class="img-fluid" alt="Imagem de Login">
                         </div>
                     </div>
 

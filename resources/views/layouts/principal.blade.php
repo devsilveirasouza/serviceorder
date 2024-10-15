@@ -111,7 +111,12 @@
                             <i class="fa-solid fa-cash-register"></i> Relatório Financeiro
                         </a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('financial.dashboard') }}">
+                            <i class="fa-solid fa-cash-register"></i> Gráfico Financeiro
+                        </a>
+                    </li>
+
                     <hr>
                     <!-- Logout Option -->
                     <li class="nav-item mt-3">

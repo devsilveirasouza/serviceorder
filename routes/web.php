@@ -87,6 +87,9 @@ Route::middleware('auth')->group(function () {
 
     // Financials Report
     Route::get('/financials/report', [FinancialController::class, 'showReport'])->name('financials.report');
+
+    // Financial Grafics
+    Route::get('/dashboard', [FinancialController::class, 'grafics'])->name('financial.dashboard');
 });
 
 require __DIR__ . '/auth.php';

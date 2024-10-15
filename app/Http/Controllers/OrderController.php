@@ -118,6 +118,9 @@ class OrderController extends Controller
         $pdf->setPaper('a4', 'portrait');
 
         // Retorna o PDF para o usuário baixar
-        return $pdf->download('ordem_servico_' . $order->id . '.pdf');
+        // return $pdf->download('ordem_servico_' . $order->id . '.pdf');
+
+        // Gerar o PDF da ordem de serviço na tela
+        return $pdf->stream('ordem_servico_' . $order->id . '.pdf');
     }
 }

@@ -1,158 +1,182 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ordem de Serviço</title>
+    <!-- PDF CSS -->
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: Roboto, sans-serif;
             font-size: 14px;
+        }
+
+        h4 {
+            margin: 0;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .w-half {
+            width: 50%;
+        }
+
+        .margin-top {
+            margin-top: 1.25rem;
+        }
+
+        .footer {
+            font-size: 0.875rem;
+            padding: 1.2rem;
+            background-color: rgb(241 245 249);
+            position: fixed;
+            bottom: 0;
+            width: 95%;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-spacing: 0;
         }
 
-        table,
-        th,
-        td {
-            border: 1px solid black;
+        table.products {
+            font-size: 0.875rem;
         }
 
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
+        table.products tr {
+            background-color: rgb(96 165 250);
         }
 
-        .header {
-            margin-bottom: 20px;
+        table.products th {
+            color: #ffffff;
+            padding: 0.5rem;
+        }
+
+        table tr.items {
+            background-color: rgb(241 245 249);
+        }
+
+        table tr.items td {
+            padding: 0.5rem;
+        }
+
+        .total {
+            text-align: right;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .text-center {
             text-align: center;
         }
     </style>
+
 </head>
 
 <body>
+    <table class="w-full">
+        <tr>
+            <td class="w-half">
+                <h2>Ordem de Serviço: {{ $order->id }}</h2>
+                <p>Data de Emissão: {{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</p>
+                <p>Status: {{ $order->status }}</p>
+                <p>Atendente: {{ $order->user->name }}</p>
+            </td>
 
-    <div class="container mt-5">
-        <div class="row">
+            <td class="w-half">
+                <h3>OFICINA XYZ</h3>
+                <p>Av. Central n° 999</p>
+                <p>Porto Alegre, RS - Brasil</p>
+                <p>CEP: 99999-999 | Fone: (51) 99999-9999</p>
+            </td>
 
-            <!-- Informações da Ordem de Serviço -->
-            <div class="justify-content-start col-md-12">
-                <h2 class="mb-4 text-center">Ordem de Serviço: {{ $order->id }}</h2>
-            </div>
+        </tr>
+    </table>
 
-        </div>
+    <hr>
 
-        <hr>
+    <div class="margin-top">
+        <table class="w-full">
+            <tr>
+                <td class="w-half">
+                    <div>
+                        <h4>Cliente:</h4>
+                    </div>
+                    <div>{{ $order->client->name }}</div>
+                    <div>{{ $order->client->email }}</div>
+                    <div>{{ $order->client->phone }}</div>
+                </td>
 
-        <!-- Informações do Cliente e Veículo -->
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <h5>Dados do Cliente</h5>
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Nome: </strong>{{ $order->client->name }}</li>
-                    <li class="list-group-item"><strong>Email: </strong>{{ $order->client->email }}</li>
-                    <li class="list-group-item"><strong>Telefone: </strong>{{ $order->client->phone }}</li>
-                </ul>
-            </div>
-
-
-            <!-- Dados do Veículo -->
-            <div class="col-md-4">
-                <h5>Dados do Veículo</h5>
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Placa: </strong>{{ $order->vehicle->plate }}</li>
-                    <li class="list-group-item"><strong>Marca: </strong>{{ $order->vehicle->brand }}</li>
-                    <li class="list-group-item"><strong>Modelo: </strong>{{ $order->vehicle->model }}</li>
-                </ul>
-            </div>
-
-            <!-- Status -->
-            <div class="col-md-4">
-                <h5>Informações Gerais</h5>
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Usuário: </strong>{{ $order->user->name }}</li>
-                    <li class="list-group-item"><strong>Data: </strong>{{ $order->created_at->format('d/m/Y') }}</li>
-                    <li class="list-group-item"><strong>Status: </strong>{{ $order->status }}</li>
-                </ul>
-            </div>
-        </div>
-
-        <hr>
-        <!-- Peças Utilizadas -->
-        <h5 class="mt-4 text-center"><strong>Peças Utilizadas</strong></h5>
-        @if($order->parts->isEmpty())
-        <p>Nenhuma peça adicionada a esta ordem.</p>
-        @else
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th class="col-md-7">Descrição</th>
-                    <th class="text-center col-md-1">Quantidade</th>
-                    <th class="text-center col-md-2">Preço Unitário</th>
-                    <th class="text-center col-md-2">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($order->parts as $part)
-                <tr>
-                    <td>{{ $part->part->name }}</td>
-                    <td class="text-center">{{ $part->quantity }}</td>
-                    <td class="text-center">R$ {{ number_format($part->unit_price, 2, ',', '.') }}</td>
-                    <td class="text-center">R$ {{ number_format($part->total_price, 2, ',', '.') }}</td>
-                </tr>
-                @endforeach
-            </tbody>
+                <td class="w-half">
+                    <div>
+                        <h4>Veículo:</h4>
+                    </div>
+                    <div>Marca: {{ $order->vehicle->brand }}</div>
+                    <div>Modelo: {{ $order->vehicle->model }}</div>
+                    <div>Placa: {{ $order->vehicle->plate }}</div>
+                </td>
+            </tr>
         </table>
-        @endif
-        <!-- Serviços Realizados -->
-        <h5 class="mt-4 text-center"><strong>Serviços Realizados</strong></h5>
-        @if($order->services->isEmpty())
-        <p>Nenhum serviços adicionado a esta ordem.</p>
-        @else
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th class="col-md-7">Descrição</th>
-                    <th class="text-center col-md-1">Quantidade</th>
-                    <th class="text-center col-md-2">Preço Unitário</th>
-                    <th class="text-center col-md-2">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($order->services as $service)
-                <tr>
-                    <td>{{ $service->service->name }}</td>
-                    <td class="">{{ $service->quantity }}</td>
-                    <td class="text-center">{{ number_format($service->unit_price, 2, ',', '.') }}</td>
-                    <td class="text-center">{{ number_format($service->total_price, 2, ',', '.') }}</td>
-                </tr>
-                @endforeach
-            </tbody>
+    </div>
+
+    <hr>
+
+    <div class="margin-top">
+
+        <table class="products margin-top">
+            <tr>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Sub Total</th>
+            </tr>
+
+            @foreach($order->parts as $part)
+            <tr class="items">
+                <td>{{ $part->part->name }}</td>
+                <td class="text-center">{{ $part->quantity }}</td>
+                <td class="text-center">R$ {{ number_format($part->unit_price, 2, ',', '.') }}</td>
+                <td class="text-center">R$ {{ number_format($part->total_price, 2, ',', '.') }}</td>
+            </tr>
+            @endforeach
         </table>
-        @endif
 
-        <hr>
+        <table class="products margin-top">
+            <tr>
+                <th>Descrição</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Sub Total</th>
+            </tr>
+            @foreach($order->services as $service)
+            <tr class="items">
+                <td>{{ $service->service->name }}</td>
+                <td class="text-center">{{ $service->quantity }}</td>
+                <td class="text-center">R$ {{ number_format($service->unit_price, 2, ',', '.') }}</td>
+                <td class="text-center">R$ {{ number_format($service->total_price, 2, ',', '.') }}</td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
 
-        <div class="row justify-content-end">
-            <div class="col-md-2 mr-2">
-                <ul class="list-group text-center">
-                    <li class="list-group-item"><strong>Valor Total</strong></li>
-                    <li class="list-group-item">R$ {{ number_format($order->total_price, 2, ',', '.') }}</li>
-                </ul>
-            </div>
-        </div>
+    <div class="total">
+        <table class="products">
+            <tr>
+                <th class="total">Total: R$ {{ number_format($order->total_price, 2, ',', '.') }}</th>
+            </tr>
+        </table>
+    </div>
 
+    <div class="footer margin-top text-center">
+        <div>Criado por:</div>
+        <div>&copy; dev.wsilveirasouza@gmail.com 2024</div>
+    </div>
 </body>
 
 </html>
