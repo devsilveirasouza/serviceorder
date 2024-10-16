@@ -114,7 +114,17 @@
         </div>
     </div>
 
-    <a href="{{ route('orders.generatePDF', $order->id) }}" class="btn btn-primary">Gerar PDF</a>
+    <hr>
+
+    <div class="row justify-content-center col-md-8">
+        <div class="justify-content-start">
+
+            <a href="{{ route('orders.generatePDF', $order->id) }}" class="btn btn-primary">Gerar PDF</a>
+        
+            <a href="{{ route('ordersItems.edit', $order->id) }}" class="btn btn-warning">Editar</a>
+        </div>
+    </div>
+
 
 </div>
 @endsection

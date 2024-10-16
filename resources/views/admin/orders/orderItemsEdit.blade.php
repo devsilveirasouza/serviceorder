@@ -1,9 +1,11 @@
 @extends('layouts.principal')
 
+@section('title', 'Editar Ordem de Serviço')
+
 @section('content')
 <div class="container mt-5">
 
-    <h3 class="mb-4">Atualizar Ordem de Serviço</h3>
+    <h3 class="mb-4 text-center">Atualizar Ordem de Serviço</h3>
     <h4>Nº: {{ $order->id }}</h4>
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -23,24 +25,35 @@
 
         <div class="row">
             <!-- Cliente (somente leitura) -->
-            <div class="form-group col-md-10">
+            <div class="form-group col-md-6">
                 <label for="client_id"><strong>Cliente</strong></label>
                 <input type="text" class="form-control" value="{{ $client->name }}" readonly>
                 <input type="hidden" name="client_id" value="{{ $client->id }}">
             </div>
 
             <!-- Veículo (somente leitura) -->
-            <div class="form-group col-md-2 text-center ">
+            <div class="form-group col-md-3 text-center ">
                 <label for="vehicle_id"><strong>Veículo</strong></label>
                 <input type="text" class="form-control text-center" value="{{ $vehicle->model }} - {{ $vehicle->plate }}" readonly>
                 <input type="hidden" name="vehicle_id" value="{{ $vehicle->id }}">
+            </div>
+
+            <!-- Andamento (Atualizar) -->
+            <div class="form-group col-md-3 text-center ">
+                <label for="status"><strong>Status</strong></label>
+                <select name="status" class="form-control text-center">
+                    <option value="{{ $order->status }}" selected>{{ $order->status }}</option>
+                    <option value="Aberta">Aberta</option>
+                    <option value="Finalizada">Finalizada</option>
+                    <option value="Cancelada">Cancelada</option>
+                </select>
             </div>
         </div>
 
         <hr>
         <!-- Serviços -->
-        <div class="form-group">
-            <label for="services">Serviços</label>
+        <div class="form-group mt-2">
+            <label for="services" class="control-label text-center">Lista de Serviços</label>
             <table class="table" id="service_table">
                 <thead>
                     <tr>
@@ -63,7 +76,7 @@
                         </td>
 
                         <td class="col-md-2">
-                            <input type="number" name="service_qty[]" class="form-control" value="{{ $orderService->quantity }}" min="1">
+                            <input type="number" name="service_qty[]" class="form-control text-center" value="{{ $orderService->quantity }}" min="1">
                         </td>
 
                         <td class="col-md-2 text-center">
@@ -73,13 +86,16 @@
                     @endforeach
                 </tbody>
             </table>
-            <button type="button" id="add_service_row" class="btn btn-primary">Adicionar Serviço</button>
+            <div class="row justify-content-end">
+                <button type="button" id="add_service_row" class="btn btn-primary col-md-2">Adicionar Serviço</button>
+            </div>
+
         </div>
 
-        
+
         <!-- Peças -->
-        <div class="form-group">
-            <label for="parts">Peças</label>
+        <div class="form-group mt-2">
+            <label for="parts" class="control-label text-center">Lista de Peças</label>
             <table class="table" id="part_table">
                 <thead>
                     <tr>
@@ -102,7 +118,7 @@
                         </td>
 
                         <td class="col-md-2">
-                            <input type="number" name="part_qty[]" class="form-control" value="{{ $orderPart->quantity }}" min="1">
+                            <input type="number" name="part_qty[]" class="form-control text-center" value="{{ $orderPart->quantity }}" min="1">
                         </td>
 
                         <td class="text-center col-md-2">
@@ -112,12 +128,15 @@
                     @endforeach
                 </tbody>
             </table>
-            <button type="button" id="add_part_row" class="btn btn-primary">Adicionar Peça</button>
+            <div class="row justify-content-end">
+                <button type="button" id="add_part_row" class="btn btn-primary col-md-2">Adicionar Peça</button>
+            </div>
         </div>
 
+        <hr>
         <!-- Botão para Salvar -->
-        <div class="mt-2">
-            <button type="submit" class="btn btn-success">Atualizar</button>
+        <div class="row justify-content-end">
+            <button type="submit" class="btn btn-success col-md-2">Atualizar</button>
         </div>
 
     </form>
@@ -143,7 +162,7 @@
                 td
                 
                 <td class="col-md-2">
-                    <input type="number" name="service_qty[]" class="form-control" value="1" min="1">
+                    <input type="number" name="service_qty[]" class="form-control text-center" value="1" min="1">
                 </td>
                 
                 <td class="text-center col-md-2">
@@ -166,7 +185,7 @@
                 </td>
 
                 <td class="col-md-2">
-                    <input type="number" name="part_qty[]" class="form-control" value="1" min="1">
+                    <input type="number" name="part_qty[]" class="form-control text-center" value="1" min="1">
                 </td>
 
                 <td class="text-center col-md-2">

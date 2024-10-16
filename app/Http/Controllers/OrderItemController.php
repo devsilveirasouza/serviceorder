@@ -198,7 +198,7 @@ class OrderItemController extends Controller
         // Atualiza o preço total da ordem com base no que está sendo adicionado
         $order->total_price = $totalServicePrice + $totalPartPrice;
         // Atualiza o status da ordem para "Em Andamento"
-        $order->status = "Em Andamento";
+        $order->status = $request->status;
         // Salvar a ordem de serviço
         $order->save();
 
